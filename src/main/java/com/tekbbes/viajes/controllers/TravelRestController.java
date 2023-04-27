@@ -51,7 +51,7 @@ public class TravelRestController {
 	public ResponseEntity<?> findCount() {
 		Map<String, Object> response = new HashMap<>();
 		Long conteo = travelService.count();
-		response.put("total de viajes = ", conteo);
+		response.put("total travel = ", conteo);
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
@@ -61,10 +61,10 @@ public class TravelRestController {
 		Map<String, Object> response = new HashMap<>();
 		Long conteo = travelService.countCity(id);
 		if (conteo == 0) {
-			response.put("mensaje", "el pais con id: ".concat(id.toString().concat(" no tiene viajes asigandos")));
+			response.put("message", "the city with id: ".concat(id.toString().concat(" no assigned travel")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
-		response.put("total de viajes segun la ciudad", conteo);
+		response.put("total trips by city ", conteo);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 
@@ -73,11 +73,11 @@ public class TravelRestController {
 		Long conteo = travelService.countCountry(id);
 		Map<String, Object> response = new HashMap<>();
 		if (conteo == 0) {
-			response.put("mensaje", "el pais con id: ".concat(id.toString().concat(" no tiene viajes asigandos")));
+			response.put("message", "the country with id: ".concat(id.toString().concat(" no assigned travel")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 
-		response.put("total de viajes segun la Pais", conteo);
+		response.put("total trips by country ", conteo);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 
@@ -87,7 +87,7 @@ public class TravelRestController {
 		Travel travelNew = null;
 		if (result.hasErrors()) {
 			List<String> errors = result.getFieldErrors().stream().map(err -> {
-				return "El campo '" + err.getField() + "' " + err.getDefaultMessage();
+				return "The field '" + err.getField() + "' " + err.getDefaultMessage();
 			}).collect(Collectors.toList());
 
 			response.put("error", errors);
@@ -97,13 +97,13 @@ public class TravelRestController {
 			travel.setCreatedAt(new Date());
 			travelNew = travelService.save(travel);
 		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al realizar el insert en la base de datos");
+			response.put("message", "Error when inserting into the database");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		response.put("mensaje", "El viaje ha sido creado con éxito!");
-		response.put("viaje", travelNew);
+		response.put("message", "The trip has been successfully created");
+		response.put("travel ", travelNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
@@ -116,7 +116,7 @@ public class TravelRestController {
 
 		if (result.hasErrors()) {
 			List<String> errors = result.getFieldErrors().stream().map(err -> {
-				return "El campo '" + err.getField() + "' " + err.getDefaultMessage();
+				return "The field '" + err.getField() + "' " + err.getDefaultMessage();
 			}).collect(Collectors.toList());
 
 			response.put("error", errors);
@@ -143,12 +143,12 @@ public class TravelRestController {
 			travelCurrent.setUpdatedAt(new Date());
 			travelUpdate = travelService.save(travelCurrent);
 		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al actualizar el viaje en la base de datos");
+			response.put("message", "Error when updating the trip in the database");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		response.put("mensaje", "El cliente ha sido actualizado con éxito!");
+		response.put("message", "The trip has been successfully updated");
 		response.put("travel", travelUpdate);
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
