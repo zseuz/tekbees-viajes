@@ -13,6 +13,9 @@ para su ejecucion se debe en el Ide de java sobre el proyecto darle en `run as s
 ruta de uso:
 `http://localhost:4200/api`
 
+# Documentacion Swagger
+la documentacion de Swagger se encuenta en el link de `http://localhost:8080/doc/swagger-ui/index.html`
+
 # Ejemplo de peticion
 la estructura de la peticion post se base en el ingreso de datos de la siguiente forma:
 ***
